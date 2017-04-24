@@ -3,7 +3,7 @@ from ..error import GraphQLError
 from ..language import ast
 from ..pyutils.default_ordered_dict import DefaultOrderedDict
 from ..type.definition import GraphQLInterfaceType, GraphQLUnionType
-from ..type.directives import GraphQLIncludeDirective, GraphQLSkipDirective
+from ..type.directives import GraphQLIncludeDirective, GraphQLSkipDirective, GraphQLExportDirective
 from ..type.introspection import (SchemaMetaFieldDef, TypeMetaFieldDef,
                                   TypeNameMetaFieldDef)
 from ..utils.type_from_ast import type_from_ast
@@ -103,11 +103,12 @@ class ExecutionResult(object):
     query, `errors` is null if no errors occurred, and is a
     non-empty array if an error occurred."""
 
-    __slots__ = 'data', 'errors', 'invalid'
+    __slots__ = 'data', 'errors', 'invalid', 'variable_values'
 
-    def __init__(self, data=None, errors=None, invalid=False):
+    def __init__(self, data=None, errors=None, invalid=False, variable_values=None):
         self.data = data
         self.errors = errors
+        self.variable_values = variable_values
 
         if invalid:
             assert data is None
