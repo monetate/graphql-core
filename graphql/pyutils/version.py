@@ -35,7 +35,10 @@ def get_version(version=None):
 def get_main_version(version=None):
     "Returns main version (X.Y[.Z]) from VERSION."
     version = get_complete_version(version)
-    parts = 2 if version[2] == 0 else 3
+    # YUCK YUCK YUCK : Do not strip the last zero! 
+    #parts = 2 if version[2] == 0 else 3
+    parts = 3
+    return '.'.join(str(x) for x in version[:parts])
     return '.'.join(str(x) for x in version[:parts])
 
 
